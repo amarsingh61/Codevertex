@@ -2,25 +2,21 @@ import Internship from "../../models/internship.js";
 import User from "../../models/User.js";
 import mongoose from "mongoose";
 
-const createinternship = async (req, res) => {
+const addintern = async (email,
+    fullname,
+    gender,
+    domain,
+    college,
+    contactno,
+    academicqualification,
+    currentyear,
+    resume,userId,res) => {
     const session = await mongoose.startSession();
     session.startTransaction();
 
     try {
-        const {
-        email,
-        fullname,
-        gender,
-        domain,
-        college,
-        contactno,
-        academicqualification,
-        currentyear,
-        resume,
-        } = req.body;
-        const id = req.userId;
 
-        if (!email || !fullname || !gender || !domain || !college || !contactno || !academicqualification || !currentyear || !resume) {
+        if (!email || !fullname || !gender || !domain || !college || !contactno || !academicqualification || !currentyear || !resume || !userId) {
         return res.status(400).json({
             success: false,
             message: "All fields are required",
@@ -37,10 +33,11 @@ const createinternship = async (req, res) => {
         academicqualification,
         currentyear,
         resume,
+        userId
         }], { session });
 
         const updateduser = await User.findByIdAndUpdate(
-        { _id: id },
+        { _id: userId },
         { $push: { internship: newintern._id } },
         { new: true, session }
         );
@@ -63,4 +60,4 @@ const createinternship = async (req, res) => {
     }
 };
 
-export default createinternship;
+export default addintern;

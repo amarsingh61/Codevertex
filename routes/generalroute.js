@@ -14,7 +14,8 @@ import userdetails from "../controllers/user/userdetails.js";
 import captureorder from "../controllers/payment/createorder.js";
 import verifypayment from "../controllers/payment/verifypayment.js";
 import auth from "../middlewares/auth.js";
-import createinternship from "../controllers/internship/createinternship.js";
+import captureinternorder from "../controllers/payment/createinternorder.js";
+import verifyinternpayment from "../controllers/payment/verifyintern.js";
 
 const apirouter=express.Router();
 
@@ -40,6 +41,7 @@ apirouter.get("/user-details",auth,userdetails);
 apirouter.post("/create-order",auth,captureorder);
 apirouter.post("/verify-payment",auth,verifypayment);
 
-apirouter.post("/internship",auth,createinternship);
+apirouter.post("/createintern-order",auth,captureinternorder);
+apirouter.post("verify-intern-payment",auth,verifyinternpayment);
 
 export default apirouter;
